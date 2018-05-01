@@ -1,14 +1,16 @@
 /*
  * Create a list that holds all of your cards
  */
-let cardList = document.getElementsByClassName('card');
-let deck = Array.prototype.slice.call( cardList );
+let cardHTMLcollection = document.getElementsByClassName('card');
+const cardList = Array.prototype.slice.call( cardHTMLcollection );
 
-const restartButton = document.querySelector('.restart');
-restartButton.addEventListener('click', function(){
-	deck = shuffle(deck);
-});
+let shuffledDeck = cardList.slice();
 
+let card;
+
+function clickCard(){
+    
+}
 
 /*
  * Display the cards on the page
@@ -32,7 +34,22 @@ function shuffle(array) {
     return array;
 }
 
+function changeCardClass(newClassName){
+        shuffledDeck.forEach(function(card){
+        card.className = newClassName
+    });
+};
 
+
+const restartButton = document.querySelector('.restart');
+restartButton.addEventListener('click', function(){
+    shuffle(shuffledDeck);
+    changeCardClass('card');
+});
+
+closeCard.addEventListener('click',function(){
+    console.log('yes');
+})
 /*
  * set up the event listener for a card. If a card is clicked:
  *  - display the card's symbol (put this functionality in another function that you call from this one)
