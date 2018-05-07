@@ -3,14 +3,9 @@
  */
 let cardHTMLcollection = document.getElementsByClassName('card');
 const cardList = Array.prototype.slice.call( cardHTMLcollection );
-
-let shuffledDeck = cardList.slice();
-
-let card;
-
-function clickCard(){
-    
-}
+const deck = document.querySelector('ul.deck');
+let openCards = [];
+let checkMatch = [];
 
 /*
  * Display the cards on the page
@@ -34,22 +29,43 @@ function shuffle(array) {
     return array;
 }
 
-function changeCardClass(newClassName){
-        shuffledDeck.forEach(function(card){
-        card.className = newClassName
-    });
-};
+function restart(){
+        changeCardClass(cardList, 'card');
+    };
 
 
 const restartButton = document.querySelector('.restart');
 restartButton.addEventListener('click', function(){
-    shuffle(shuffledDeck);
-    changeCardClass('card');
+    shuffle(cardList);
+    restart();
 });
 
-closeCard.addEventListener('click',function(){
-    console.log('yes');
-})
+function cardClick(){
+    let clickedCard = event.target
+    checkMatch.splice(0, 0, clickedCard);
+    changeCardClass(checkMatch, 'card match');
+    checkMatchCards();
+};
+
+function checkMatchCards(){
+    if (checkMatch[0] === checkMatch[1]){
+        addToDeck;
+        checkMatch.splice(0, 2);
+    }else removeEventListener('click', cardClick)};
+
+function addToDeck(){
+    deck.splice(0, 0, checkMatch[0], checkMatch[1]);
+    changeCardClass('card open show');  
+};
+
+function changeCardClass(arrey, newClassName){
+        arrey.forEach(function(card){
+        card.className = newClassName
+    });
+};
+
+deck.addEventListener('click', cardClick)
+
 /*
  * set up the event listener for a card. If a card is clicked:
  *  - display the card's symbol (put this functionality in another function that you call from this one)
