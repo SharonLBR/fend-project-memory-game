@@ -1,11 +1,11 @@
 /*
  * Create a list that holds all of your cards
  */
-let cardHTMLcollection = document.getElementsByClassName('card');
-const cardList = Array.prototype.slice.call( cardHTMLcollection );
-const deck = document.querySelector('ul.deck');
+let cardList = document.querySelectorAll('.card');
+let card;
 let openCards = [];
 let checkMatch = [];
+const restartButton = document.querySelector('.restart');
 
 /*
  * Display the cards on the page
@@ -27,35 +27,6 @@ function shuffle(array) {
     }
 
     return array;
-}
-
-function restart(){
-        changeCardClass(cardList, 'card');
-    };
-
-
-const restartButton = document.querySelector('.restart');
-restartButton.addEventListener('click', function(){
-    shuffle(cardList);
-    restart();
-});
-
-function cardClick(){
-    let clickedCard = event.target
-    checkMatch.splice(0, 0, clickedCard);
-    changeCardClass(checkMatch, 'card match');
-    checkMatchCards();
-};
-
-function checkMatchCards(){
-    if (checkMatch[0] === checkMatch[1]){
-        addToDeck;
-        checkMatch.splice(0, 2);
-    }else removeEventListener('click', cardClick)};
-
-function addToDeck(){
-    deck.splice(0, 0, checkMatch[0], checkMatch[1]);
-    changeCardClass('card open show');  
 };
 
 function changeCardClass(arrey, newClassName){
@@ -64,7 +35,32 @@ function changeCardClass(arrey, newClassName){
     });
 };
 
-deck.addEventListener('click', cardClick)
+restartButton.addEventListener('click', function(){
+    changeCardClass(cardList, 'card');
+    shuffle(cardList);
+    addEvent();
+    checkMatch = [];
+    openCards = [];
+});
+
+function addEvent(){
+cardList.forEach(function(card){
+    card.addEventListener('click', cardClick)
+})};
+
+function cardClick(event){
+    event.target.className = 'card match';
+    let symbol = event.target.querySelector('i');
+    checkMatch.splice(0, 0, symbol);
+    event.target.removeEventListener('click', cardClick);
+};
+
+if (checkMatch.length === 2){
+        if (checkMatch[0].className === checkMatch[1].className){
+            openCards.splice(0, 0, checkMatch[0].parentElement checkMatch[1].parentElement);
+        }else (checkMatch = [];)
+}
+
 
 /*
  * set up the event listener for a card. If a card is clicked:
